@@ -6,10 +6,15 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { PortfolioCard } from "@/components/cards/PortfolioCard";
 import { enrichPattern, enrichPortfolio, enrichProduct, getSite } from "@/lib/data/queries";
 import { dictionaries } from "@/lib/i18n/dictionary";
-import type { Locale } from "@/lib/i18n/types";
+import { LOCALES, type Locale } from "@/lib/i18n/types";
 import { href, t } from "@/lib/utils";
 
 type Props = { params: Promise<{ locale: Locale; slug: string }> };
+
+export async function generateStaticParams() {
+  const site = await getSite();
+  return LOCALES.flatMap((locale) => site.categories.map((category) => ({ locale, slug: category.slug })));
+}
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;
   const site = await getSite();

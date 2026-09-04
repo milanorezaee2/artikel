@@ -2,11 +2,15 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PageHero } from "@/components/ui/PageHero";
 import { dictionaries } from "@/lib/i18n/dictionary";
-import type { Locale } from "@/lib/i18n/types";
+import { LOCALES, type Locale } from "@/lib/i18n/types";
 
 const docs = ["privacy", "terms", "licenses"] as const;
 type Doc = (typeof docs)[number];
 type Props = { params: Promise<{ locale: Locale; doc: string }> };
+
+export function generateStaticParams() {
+  return LOCALES.flatMap((locale) => docs.map((doc) => ({ locale, doc })));
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, doc } = await params;

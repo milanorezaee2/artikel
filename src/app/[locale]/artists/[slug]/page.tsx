@@ -3,10 +3,15 @@ import { notFound } from "next/navigation";
 import { ProfileHeader } from "@/components/profile/ProfileHeader";
 import { ProfileTabs } from "@/components/profile/ProfileTabs";
 import { artistStats, enrichEducation, enrichPattern, enrichPortfolio, enrichProduct, getSite } from "@/lib/data/queries";
-import type { Locale } from "@/lib/i18n/types";
+import { LOCALES, type Locale } from "@/lib/i18n/types";
 import { t } from "@/lib/utils";
 
 type Props = { params: Promise<{ locale: Locale; slug: string }> };
+
+export async function generateStaticParams() {
+  const site = await getSite();
+  return LOCALES.flatMap((locale) => site.artists.map((artist) => ({ locale, slug: artist.slug })));
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;

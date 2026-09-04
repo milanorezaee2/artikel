@@ -11,8 +11,9 @@ import { getNavData } from "@/lib/data/nav";
 import { LOCALES, dirOf, type Locale } from "@/lib/i18n/types";
 import { dictionaries } from "@/lib/i18n/dictionary";
 
-// Content is admin-managed at runtime (data/content.json) → render on demand so edits are live.
-export const dynamic = "force-dynamic";
+export function generateStaticParams() {
+  return LOCALES.map((locale) => ({ locale }));
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;

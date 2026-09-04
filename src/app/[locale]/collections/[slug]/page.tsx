@@ -5,10 +5,15 @@ import { PatternGrid, ProductGrid } from "@/components/product/Grids";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { enrichPattern, enrichProduct, getSite } from "@/lib/data/queries";
 import { dictionaries } from "@/lib/i18n/dictionary";
-import type { Locale } from "@/lib/i18n/types";
+import { LOCALES, type Locale } from "@/lib/i18n/types";
 import { t } from "@/lib/utils";
 
 type Props = { params: Promise<{ locale: Locale; slug: string }> };
+
+export async function generateStaticParams() {
+  const site = await getSite();
+  return LOCALES.flatMap((locale) => site.collections.map((collection) => ({ locale, slug: collection.slug })));
+}
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;
   const site = await getSite();

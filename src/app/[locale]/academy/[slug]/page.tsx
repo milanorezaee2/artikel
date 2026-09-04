@@ -11,10 +11,15 @@ import { Badge } from "@/components/ui/Badge";
 import { Reveal } from "@/components/ui/Reveal";
 import { enrichEducation, enrichPattern, enrichProduct, getSite } from "@/lib/data/queries";
 import { dictionaries } from "@/lib/i18n/dictionary";
-import type { Locale } from "@/lib/i18n/types";
+import { LOCALES, type Locale } from "@/lib/i18n/types";
 import { faNum, formatDuration, href, t } from "@/lib/utils";
 
 type Props = { params: Promise<{ locale: Locale; slug: string }> };
+
+export async function generateStaticParams() {
+  const site = await getSite();
+  return LOCALES.flatMap((locale) => site.education.map((item) => ({ locale, slug: item.slug })));
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;
