@@ -36,8 +36,7 @@ export function formatDuration(min: number, locale: Locale, dict: { minutes: str
 
 export function href(locale: Locale, path: string) {
   const clean = path.startsWith("/") ? path : `/${path}`;
-  const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
-  return `${basePath}/${locale}${clean === "/" ? "" : clean}`;
+  return `/${locale}${clean === "/" ? "" : clean}`;
 }
 
 export function slugify(s: string) {

@@ -3,7 +3,7 @@
 Premium bilingual (فارسی RTL / English LTR) platform for **patterns · creators · portfolios · products · education**.
 
 Built with Next.js 15 (App Router), React 19, Tailwind v4 and a token-driven design system.
-Repository: `milanopardi13/artikel` · Production host: **Netlify** (SSR).
+Repository: `milanorezaee2/artikel` · Production host: **Netlify** (SSR).
 
 ## Run
 
@@ -84,7 +84,7 @@ portfolio/education flags & ordering, banners, SEO. Every save is live immediate
 This app is **server-rendered**: it uses middleware, route handlers (`/api/*`), a signed-cookie admin
 session and admin-managed runtime content. Every page is `force-dynamic`.
 
-1. **app.netlify.com → Add new site → Import an existing project → GitHub** → `milanopardi13/artikel` (branch `main`).
+1. **app.netlify.com → Add new site → Import an existing project → GitHub** → `milanorezaee2/artikel` (branch `main`).
 2. The `netlify.toml` in this repo configures everything (build command, `.next` publish,
    `@netlify/plugin-nextjs`, Node 20, security headers). Leave build settings as-is.
 3. **Site configuration → Environment variables** — add:
@@ -105,9 +105,13 @@ are created for pushes on other branches.
 ### ⚠️ Not deployable to GitHub Pages / static hosting
 
 The app **cannot** run as a static export: `output: "export"` fails the build because
-`/api/*` route handlers use `force-dynamic` and middleware isn't supported in export mode.
+`/api/*` route handlers use `force-dynamic`, middleware isn't supported in export mode, and
+`/patterns`, `/shop` and `/search` read `searchParams` on the server.
 Do not add a "Deploy to GitHub Pages" workflow to this repo — it will always fail.
 Host it on a Node-capable platform (Netlify, Vercel, VPS, Docker, Liara…).
+
+The only workflow in `.github/workflows/` is `ci.yml`, which typechecks, lints and builds
+the app on every push and pull request. Deployment itself is done by Netlify, not by Actions.
 
 ### Deploy (Vercel)
 
