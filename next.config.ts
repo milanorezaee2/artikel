@@ -1,10 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: process.env.GITHUB_PAGES === "true" ? "export" : undefined,
+  // This app is server-rendered (middleware + /api route handlers + signed-cookie admin
+  // session), so it is deployed to Netlify — never as a static export. See README.
   trailingSlash: true,
-  basePath: process.env.NEXT_PUBLIC_BASE_PATH ?? "",
-  assetPrefix: process.env.NEXT_PUBLIC_BASE_PATH ? `${process.env.NEXT_PUBLIC_BASE_PATH}/` : undefined,
   images: {
     unoptimized: true,
     // The default candidate list tops out at 3840w, which appends dead weight to every srcset.
